@@ -1,13 +1,12 @@
+import { Routes, Route } from "react-router";
 import "./App.css";
-import LoginComponent from "./components/login";
+import LoginPage from "./pages/auth/login";
 
 function App() {
 	return (
-		<>
-			<div className='flex min-h-svh flex-col items-center justify-center'>
-				<LoginComponent />
-			</div>
-		</>
+		<Routes>
+			<Route path='/' element={<LoginPage />} />
+		</Routes>
 	);
 }
 
