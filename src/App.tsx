@@ -1,13 +1,11 @@
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import LoginComponent from "./components/login";
 
 function App() {
 	return (
 		<>
 			<div className='flex min-h-svh flex-col items-center justify-center'>
-				<Button variant={"outline"} className=''>
-					Click me
-				</Button>
+				<LoginComponent />
 			</div>
 		</>
 	);
