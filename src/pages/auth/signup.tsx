@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+import { Link } from "react-router";
 import {
 	Form,
 	FormControl,
@@ -17,21 +17,22 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserIcon } from "lucide-react";
-import { Link } from "react-router";
 
 const loginFormSchema = z.object({
 	password: z.string().min(5),
 	email: z.email(),
+	name: z.string().min(5),
 });
 
 const formSchema = loginFormSchema;
 
-export default function LoginPage() {
+export default function Singupage() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			email: "",
 			password: "",
+			name: "",
 		},
 	});
 
@@ -52,8 +53,9 @@ export default function LoginPage() {
 						<div className='w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4'>
 							<UserIcon className='w-8 h-8 text-secondary' />
 						</div>
-						<h1 className='text-2xl font-bold text-gray-900'>Welcome Back</h1>
-						<p className='text-gray-600 mt-2'>Sign in to play Tic-Tac-Toe</p>
+						<h1 className='text-2xl font-bold text-gray-900'>Sign Up</h1>
+
+						{/* <p className='text-gray-600 mt-2'>Sign Up to play Tic-Tac-Toe</p> */}
 					</div>
 				</CardHeader>
 				<CardContent>
@@ -72,6 +74,26 @@ export default function LoginPage() {
 													placeholder='johndoe@mail.com'
 													type='email'
 													autoComplete='email'
+													className='w-full px-4 py-3 rounded-lg'
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name='name'
+									render={({ field }) => (
+										<FormItem className='grid gap-2'>
+											<FormLabel htmlFor='name'>Full Name</FormLabel>
+											<FormControl className='h-14'>
+												<Input
+													id='name'
+													placeholder='Enter full name'
+													type='name'
+													autoComplete='name'
 													className='w-full px-4 py-3 rounded-lg'
 													{...field}
 												/>
@@ -102,16 +124,16 @@ export default function LoginPage() {
 									)}
 								/>
 								<Button type='submit' className='w-full h-14'>
-									Login
+									Sign Up Now
 								</Button>
 							</div>
 						</form>
 					</Form>
 					<div className='mt-4 text-center text-sm'>
-						Don&apos;t have an account?
-						<Link to='/sign-up'>
+						Already have an account?
+						<Link to='/'>
 							<Button variant={"link"} className='cursor-pointer'>
-								Sign up
+								Login
 							</Button>
 						</Link>
 					</div>
