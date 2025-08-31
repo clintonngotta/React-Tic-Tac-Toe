@@ -18,11 +18,8 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserIcon } from "lucide-react";
 import { Link } from "react-router";
-
-const loginFormSchema = z.object({
-	password: z.string().min(5),
-	email: z.email(),
-});
+import { loginFormSchema } from "@/lib/schemas";
+import { loginAction } from "../actions/auth";
 
 const formSchema = loginFormSchema;
 
@@ -38,6 +35,8 @@ export default function LoginPage() {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
 			console.log(values);
+			const login = await loginAction(values);
+			console.log("login:", login);
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to login. Please try again.");
@@ -101,7 +100,7 @@ export default function LoginPage() {
 										</FormItem>
 									)}
 								/>
-								<Button type='submit' className='w-full h-14'>
+								<Button type='submit' className='w-full h-14 cursor-pointer'>
 									Login
 								</Button>
 							</div>

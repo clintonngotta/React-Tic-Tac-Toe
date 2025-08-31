@@ -17,14 +17,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserIcon } from "lucide-react";
+import { signupFormSchema } from "@/lib/schemas";
 
-const loginFormSchema = z.object({
-	password: z.string().min(5),
-	email: z.email(),
-	name: z.string().min(5),
-});
-
-const formSchema = loginFormSchema;
+const formSchema = signupFormSchema;
 
 export default function Singupage() {
 	const form = useForm<z.infer<typeof formSchema>>({
