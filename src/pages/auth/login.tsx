@@ -20,10 +20,13 @@ import { UserIcon } from "lucide-react";
 import { Link } from "react-router";
 import { loginFormSchema } from "@/lib/schemas";
 import { loginAction } from "../actions/auth";
+import { useNavigate } from "react-router";
 
 const formSchema = loginFormSchema;
 
 export default function LoginPage() {
+	const navigate = useNavigate();
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -36,7 +39,10 @@ export default function LoginPage() {
 		try {
 			console.log(values);
 			const login = await loginAction(values);
-			console.log("login:", login);
+			if (login.success) {
+				console.log("login dat:", login);
+				navigate("/play");
+			}
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to login. Please try again.");

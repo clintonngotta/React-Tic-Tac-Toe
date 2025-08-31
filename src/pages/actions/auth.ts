@@ -23,6 +23,7 @@ export async function loginAction(formData: {
 			throw new Error(response.message || "login error");
 		}
 
+        localStorage.setItem("token", response.token);
 		return {
 			success: true,
 			...response,
