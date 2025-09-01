@@ -40,6 +40,8 @@ cd React-Tic-Tac-Toe
 ``` bash
 npm install
   ```
+### 3 Create .env using env.example
+update your database details
 
 ## Running the project
 
