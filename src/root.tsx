@@ -1,4 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -20,5 +22,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function Root() {
-	return <Outlet />;
+	return (
+		<Provider store={store}>
+			<Outlet />
+		</Provider>
+	);
 }

@@ -21,11 +21,16 @@ import { Link } from "react-router";
 import { loginFormSchema } from "@/lib/schemas";
 import { loginAction } from "../actions/auth";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginStart, loginSuccess } from "@/store/authSlice";
+import type { RootState } from "@/store/store";
 
 const formSchema = loginFormSchema;
 
 export default function LoginPage() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { loading } = useSelector((state: RootState) => state.auth);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -36,11 +41,12 @@ export default function LoginPage() {
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
+		dispatch(loginStart());
+
 		try {
-			console.log(values);
 			const login = await loginAction(values);
 			if (login.success) {
-				console.log("login dat:", login);
+				dispatch(loginSuccess(login));
 				navigate("/play");
 			}
 		} catch (error) {
@@ -107,7 +113,7 @@ export default function LoginPage() {
 									)}
 								/>
 								<Button type='submit' className='w-full h-14 cursor-pointer'>
-									Login
+									{loading ? "processing" : "Login"}
 								</Button>
 							</div>
 						</form>
