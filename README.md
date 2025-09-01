@@ -37,5 +37,16 @@ cd React-Tic-Tac-Toe
 ```
 
 ### 2. Install dependencies
-```
+``` bash
 npm install
+  ```
+
+## Running the project
+
+```bash 
+npm run dev
+
+```
+for production
+```bash
+npm run build
