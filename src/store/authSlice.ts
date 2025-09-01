@@ -1,9 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+interface UserType {
+	name: string;
+	email: string;
+	userId: string;
+}
 
-const initialState = {
+interface authType {
+	user: UserType;
+	isAuthenticated: boolean;
+	token: string;
+	loading: boolean;
+}
+
+const initialState: authType = {
 	isAuthenticated: false,
-	user: null,
-	token: null,
+	user: {
+		userId: "",
+		email: "",
+		name: "",
+	},
+	token: "",
 	loading: false,
 };
 
@@ -23,13 +39,21 @@ const authSlice = createSlice({
 		loginFailure: (state) => {
 			state.loading = false;
 			state.isAuthenticated = false;
-			state.user = null;
-			state.token = null;
+			state.user = {
+				userId: "",
+				email: "",
+				name: "",
+			};
+			state.token = "";
 		},
 		logout: (state) => {
 			state.isAuthenticated = false;
-			state.user = null;
-			state.token = null;
+			state.user = {
+				userId: "",
+				email: "",
+				name: "",
+			};
+			state.token = "";
 		},
 	},
 });
