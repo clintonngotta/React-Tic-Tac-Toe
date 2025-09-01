@@ -2,7 +2,7 @@
 
 import type { BoardType } from "@/store/playSlice";
 
-const BACKEND_BASE_URL = "http://localhost:5000";
+const BACKEND_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export async function loginAction(formData: {
 	password: string;
