@@ -18,15 +18,20 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { UserIcon } from "lucide-react";
 import { Link } from "react-router";
-
-const loginFormSchema = z.object({
-	password: z.string().min(5),
-	email: z.email(),
-});
+import { loginFormSchema } from "@/lib/schemas";
+import { loginAction } from "../actions/auth";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginStart, loginSuccess } from "@/store/authSlice";
+import type { RootState } from "@/store/store";
 
 const formSchema = loginFormSchema;
 
 export default function LoginPage() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { loading } = useSelector((state: RootState) => state.auth);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -36,8 +41,14 @@ export default function LoginPage() {
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
+		dispatch(loginStart());
+
 		try {
-			console.log(values);
+			const login = await loginAction(values);
+			if (login.success) {
+				dispatch(loginSuccess(login));
+				navigate("/play");
+			}
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to login. Please try again.");
@@ -101,8 +112,8 @@ export default function LoginPage() {
 										</FormItem>
 									)}
 								/>
-								<Button type='submit' className='w-full h-14'>
-									Login
+								<Button type='submit' className='w-full h-14 cursor-pointer'>
+									{loading ? "processing" : "Login"}
 								</Button>
 							</div>
 						</form>
